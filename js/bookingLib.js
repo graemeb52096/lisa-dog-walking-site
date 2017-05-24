@@ -10,6 +10,7 @@ var dateHasAppointment = function(dateKey){
 
 var initCalendar = function(month, year){
 	var calendar = document.createElement("table");
+	calendar.classList.add("days");
 	var caption = calendar.createCaption();
 	caption.innerHTML = MONTHS[month];
 	var header = calendar.createTHead();
