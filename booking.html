@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Wandering Tails Puppy Dog Services</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Khula|Lobster|Quicksand|Roboto|Roboto+Mono" rel="stylesheet">
+		<link rel="stylesheet" href="styles/style.css">
+	</head>
+	<body>
+		<script type="text/javascript" src="js/services.js"></script>
+		<script type="text/javascript" src="js/bookingLib.js"></script>
+		<script>
+			var datesSelected = [];
+			var total = 0;
+
+			var day = { date:'05/01/17',
+				appointments: [
+					{ time:'12:00', meta:{ reserved:false } },
+					{ time:'16:00', meta:{ reserved:false } },
+				]
+			};
+
+			var dateClicked = function(date){
+				var modal = document.getElementById('availablity' + date);
+				var span = document.getElementById('close' + date);
+				modal.style.display = "block";
+				span.onclick = function(){
+					modal.style.display = "none";
+				};
+			};
+			var loadServices = function(element){
+				console.log("loading services")
+				for (var i=0; i<services.length; i++){
+					var option = document.createElement("option");
+					option.value = i;
+					option.innerHTML = services[i].title;
+					element.appendChild(option);
+				};
+			}
+			var loadDay = function(day){
+
+			}
+			var addSlot = function(dateTime){
+				var appointmentSummary = document.getElementById("appointment-summary");
+				var date = dateTime.slice(0, 8);
+				var serviceIndex = document.getElementById("appointmentType" + date).value;
+				var service = services[serviceIndex];
+				service["dateTime"] = dateTime;
+				console.log(service);
+				appointmentSummary.style.display = "block";
+				var checkbox = document.getElementById(dateTime);
+				if (!checkbox.checked){
+					alert("is checked");
+					var index = datesSelected.indexOf(service);
+					if (index > -1){
+						datesSelected.splice(index, 1);
+						updateSelection();
+						console.log(datesSelected);
+					};
+				} else {
+					if (!(datesSelected.indexOf(service) > -1)){
+						console.log('service exists');
+						datesSelected.push(service);
+						total = total + service.cost;
+						updateSelection();
+						console.log(datesSelected);
+					};
+				};
+			};
+			var displayDateTime = function(dateTime, next){
+				var output = "";
+				output = dateTime.slice(0, 8);
+				output = output + " at ";
+				output = output + dateTime.slice(8, 13);
+				next(output);
+			};
+			var updateSelection = function(){
+				console.log('updating');
+				var appointmentSummary = document.getElementById("selection");
+				var tax = 0;
+				var total = 0;
+				appointmentSummary.innerHTML = "";
+				appointmentSummary.style.display = "block";
+				for (var i=0; i<datesSelected.length; i++){
+					var service = datesSelected[i];
+					var confirmAppointment = appointmentSummary.insertRow();
+					var appointmentKind = confirmAppointment.insertCell(0);
+					appointmentKind.innerHTML = service.title;
+					var appointmentCost = confirmAppointment.insertCell(1);
+					appointmentCost.innerHTML = "$" + service.cost;
+					var appointmentDate = confirmAppointment.insertCell(2);
+					displayDateTime(service.dateTime, function(date){
+						appointmentDate.innerHTML = date;
+					});
+					total = total + service.cost;
+				};
+				var selection = document.getElementById("selection");
+				var tax = document.getElementById("tax");
+				tax.innerHTML = "Tax(13%): $" + (total * .13).toFixed(2);
+				var totalCost = document.getElementById("total");
+				totalCost.innerHTML = "Total + Tax: $" + (total * 1.13).toFixed(2);
+			};
+		</script>
+		<div class="row">
+			<div class="header col-12">
+				<div class="brand-logo">Wandering Tails Puppy Dog Services</div>
+				<ul class="tabs">
+					<li class="right"><a href="booking.html">Book Appointment!<i class="material-icons md-18 header-icon">pets</i></a></li>
+					<li class="right"><a href="references.html">References<i class="material-icons md-18 header-icon">pets</i></a></li>
+					<li class="right"><a href="services.html">What do we offer?<i class="material-icons md-18 header-icon">pets</i></a></li>
+					<li class="right"><a href="about.html">Who are we?<i class="material-icons md-18 header-icon">pets</i></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="container">
+			<div class="calendar">
+				<div class="banner">
+					<span class="month">May</span>
+					<span class="year">2017</span>
+				</div>
+				<table class="days">
+					<caption>Select Times</caption>
+					<thead>
+						<tr>
+							<th>Mon</th>
+							<th>Tue</th>
+							<th>Wed</th>
+							<th>Thu</th>
+							<th>Fri</th>
+							<th>Sat</th>
+							<th>Sun</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+							<td>
+								<button id="date" class="date-picker" onclick="dateClicked('05/01/17')">01</button>
+								<div id="availablity05/01/17" class="modal">
+									<div class="modal-content">
+										<span id="close05/01/17" class="close">&times;</span>
+										<form class="form-control">
+											<h2>Times:</h2>
+											<div class="form-group">
+												<div class="form-group">
+													<label for="appointmentType05/01/1710:00:00">Appointment Type</label>
+													<select id="appointmentType05/01/1710:00:00"></select>
+												</div>
+												<label for="05/01/1710:00:00">10:00am</label>
+												<input id="05/01/1710:00:00" type="checkbox" name="appointment_time" value="05/01/1710:00:00" onclick="addSlot('05/01/1710:00:00');">
+											</div>
+											<div class="form-group">
+												<div class="form-group">
+													<label for="appointmentType05/01/1712:00:00">Appointment Type</label>
+													<select id="appointmentType05/01/1712:00:00"></select>
+												</div>
+												<label for="05/01/1712:00:00">12:00am</label>
+												<input id="05/01/1712:00:00" type="checkbox" name="appointment_time" value="05/01/1710:00:00" onclick="addSlot('05/01/1712:00:00');">
+											</div>
+										</form>
+									</div>
+								</div>
+							</td>
+							<td>
+								<button id="date" class="date-picker" onclick="dateClicked('05/02/17')">02</button>
+								<div id="availablity05/02/17" class="modal">
+									<div class="modal-content">
+										<span id="close05/02/17" class="close">&times;</span>
+										<form class="form-control">
+											<h2>Times:</h2>
+											<div class="form-group">
+												<label for="appointmentType05/02/17">Appointment Type</label>
+												<select id="appointmentType05/02/17"></select>
+											</div>
+											<div class="form-group">
+												<label for="05/02/1712:00:00">8:00pm</label>
+												<input id="05/02/1712:00:00" type="checkbox" name="appointment_time" value="05/02/1712:00:00" onclick="addSlot('05/02/1712:00:00');">
+											</div>
+											<div class="form-group">
+												<label for="05/02/1720:00:00">20:00am</label>
+												<input id="05/02/1720:00:00" type="checkbox" name="appointment_time" value="05/02/1720:00:00" onclick="addSlot('05/02/1720:00:00');">
+											</div>
+										</form>
+									</div>
+								</div>
+							</td>
+							<td>
+								<button id="date" class="date-picker" onclick="dateClicked('05/03/17')">03</button>
+								<div id="availablity05/03/17" class="modal">
+									<div class="modal-content">
+										<span id="close05/03/17" class="close">&times;</span>
+										<form class="form-control">
+											<h2>Times:</h2>
+											<div class="form-group">
+												<label for="appointmentType05/03/17">Appointment Type</label>
+												<select id="appointmentType05/03/17"></select>
+											</div>
+											<div class="form-group">
+												<label for="05/03/1712:00:00">8:00pm</label>
+												<input id="05/03/1712:00:00" type="checkbox" name="appointment_time" value="05/03/1712:00:00" onclick="addSlot('05/03/1712:00:00');">
+											</div>
+											<div class="form-group">
+												<label for="05/03/1720:00:00">20:00am</label>
+												<input id="05/03/1720:00:00" type="checkbox" name="appointment_time" value="05/03/1720:00:00" onclick="addSlot('05/03/1720:00:00');">
+											</div>
+										</form>
+									</div>
+								</div>
+							</td>
+							<td>
+								<button id="date" class="date-picker" onclick="dateClicked('05/04/17')">04</button>
+								<div id="availablity05/04/17" class="modal">
+									<div class="modal-content">
+										<span id="close05/04/17" class="close">&times;</span>
+										<form class="form-control">
+											<h2>Times:</h2>
+											<div class="form-group">
+												<label for="appointmentType05/04/17">Appointment Type</label>
+												<select id="appointmentType05/04/17"></select>
+											</div>
+											<div class="form-group">
+												<label for="05/04/1712:00:00">8:00pm</label>
+												<input id="05/04/1712:00:00" type="checkbox" name="appointment_time" value="05/04/1712:00:00" onclick="addSlot('05/04/1712:00:00');">
+											</div>
+											<div class="form-group">
+												<label for="05/04/1720:00:00">20:00am</label>
+												<input id="05/04/1720:00:00" type="checkbox" name="appointment_time" value="05/04/1720:00:00" onclick="addSlot('05/04/1720:00:00');">
+											</div>
+										</form>
+									</div>
+								</div>
+							</td>
+								<td>
+									<button id="date" class="date-picker" onclick="dateClicked('05/05/17')">05</button>
+									<div id="availablity05/05/17" class="modal">
+										<div class="modal-content">
+											<span id="close05/05/17" class="close">&times;</span>
+											<form class="form-control">
+												<h2>Times:</h2>
+												<div class="form-group">
+													<label for="appointmentType05/05/17">Appointment Type</label>
+													<select id="appointmentType05/05/17"></select>
+												</div>
+												<div class="form-group">
+													<label for="05/05/1712:00:00">8:00pm</label>
+													<input id="05/05/1712:00:00" type="checkbox" name="appointment_time" value="05/05/1712:00:00" onclick="addSlot('05/05/1712:00:00');">
+												</div>
+												<div class="form-group">
+													<label for="05/05/1720:00:00">20:00am</label>
+													<input id="05/05/1720:00:00" type="checkbox" name="appointment_time" value="05/05/1720:00:00" onclick="addSlot('05/05/1720:00:00');">
+												</div>
+											</form>
+										</div>
+									</div>
+								</td>
+								<td>
+									<button id="date" class="date-picker" onclick="dateClicked('05/06/17')">06</button>
+									<div id="availablity05/06/17" class="modal">
+										<div class="modal-content">
+											<span id="close05/06/17" class="close">&times;</span>
+											<form class="form-control">
+												<h2>Times:</h2>
+												<div class="form-group">
+													<label for="appointmentType05/06/17">Appointment Type</label>
+													<select id="appointmentType05/06/17"></select>
+												</div>
+												<div class="form-group">
+													<label for="05/06/1712:00:00">8:00pm</label>
+													<input id="05/06/1712:00:00" type="checkbox" name="appointment_time" value="05/06/1712:00:00" onclick="addSlot('05/06/1712:00:00');">
+												</div>
+												<div class="form-group">
+													<label for="05/06/1720:00:00">20:00am</label>
+													<input id="05/06/1720:00:00" type="checkbox" name="appointment_time" value="05/06/1720:00:00" onclick="addSlot('05/06/1720:00:00');">
+												</div>
+											</form>
+										</div>
+									</div>
+								</td>
+						</tr>
+						<tr>
+							<td>
+								<button id="date" class="date-picker" onclick="dateClicked('05/07/17')">07</button>
+								<div id="availablity05/07/17" class="modal">
+									<div class="modal-content">
+										<span id="close05/07/17" class="close">&times;</span>
+										<form class="form-control">
+											<h2>Times:</h2>
+											<div class="form-group">
+												<label for="appointmentType05/07/17">Appointment Type</label>
+												<select id="appointmentType05/07/17"></select>
+											</div>
+											<div class="form-group">
+												<label for="05/07/1712:00:00">8:00pm</label>
+												<input id="05/07/1712:00:00" type="checkbox" name="appointment_time" value="05/07/1712:00:00" onclick="addSlot('05/07/1712:00:00');">
+											</div>
+											<div class="form-group">
+												<label for="05/07/1720:00:00">20:00am</label>
+												<input id="05/07/1720:00:00" type="checkbox" name="appointment_time" value="05/07/1720:00:00" onclick="addSlot('05/07/1720:00:00');">
+											</div>
+										</form>
+									</div>
+								</div>
+							</td>
+							<td><button class="date-picker unavailable">08</button></td>
+							<td><button class="date-picker unavailable">09</button></td>
+							<td><button class="date-picker unavailable">10</button></td>
+							<td><button class="date-picker unavailable">11</button></td>
+							<td><button class="date-picker unavailable">12</button></td>
+							<td><button class="date-picker unavailable">13</button></td>
+						</tr>
+						<tr>
+							<td><button class="date-picker unavailable">14</button></td>
+							<td><button class="date-picker unavailable">15</button></td>
+							<td><button class="date-picker unavailable">16</button></td>
+							<td>
+								<button id="date" class="date-picker" onclick="dateClicked('05/17/17')">17</button>
+								<div id="availablity05/17/17" class="modal">
+									<div class="modal-content">
+										<span id="close05/17/17" class="close">&times;</span>
+										<form class="form-control">
+											<h2>Times:</h2>
+											<div class="form-group">
+												<label for="appointmentType05/17/17">Appointment Type</label>
+												<select id="appointmentType05/17/17"></select>
+											</div>
+											<div class="form-group">
+												<label for="05/17/1712:00:00">8:00pm</label>
+												<input id="05/17/1712:00:00" type="checkbox" name="appointment_time" value="05/17/1712:00:00" onclick="addSlot('05/17/1712:00:00');">
+											</div>
+											<div class="form-group">
+												<label for="05/17/1720:00:00">20:00am</label>
+												<input id="05/17/1720:00:00" type="checkbox" name="appointment_time" value="05/17/1720:00:00" onclick="addSlot('05/17/1720:00:00');">
+											</div>
+										</form>
+									</div>
+								</div>
+							</td>
+							<td><button class="date-picker unavailable">18</button></td>
+							<td><button class="date-picker unavailable">19</button></td>
+							<td><button class="date-picker unavailable">20</button></td>
+						</tr>
+						<tr>
+							<td><button class="date-picker unavailable">21</button></td>
+							<td><button class="date-picker unavailable">22</button></td>
+							<td><button class="date-picker unavailable">23</button></td>
+							<td><button class="date-picker unavailable">24</button></td>
+							<td><button class="date-picker unavailable">25</button></td>
+							<td><button class="date-picker unavailable">26</button></td>
+							<td><button class="date-picker unavailable">27</button></td>
+						</tr>
+						<tr>
+							<td><button class="date-picker unavailable">28</button></td>
+							<td><button class="date-picker unavailable">29</button></td>
+							<td><button class="date-picker unavailable">30</button></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="appointment-summary" class="col-4 offset-4 appointment-summary">
+				<span class="arrow">V</span>
+				<h2>Appointment Summary:</h2>
+				<table class="selection" id="selection">
+					<thead>
+						<tr>
+							<th>Service</th>
+							<th>Cost</th>
+							<th>Date/Time<th>
+						</tr>
+					</thead>
+				</table>
+				<span id="tax" class="tax">Tax: </span>
+				<span id="total" class="total"></span>
+				<form>
+					<div class="form-group">
+						<label for="address">Adress:</label>
+						<input type="text" id="adress" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<input type="email" id="email" />
+					</div>
+					<div class="form-group">
+						<label for="details">Details:</label>
+						<input type="textfield" id="details" />
+					</div>
+					<button>Confirm</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

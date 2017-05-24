@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Wandering Tails Puppy Dog Services</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Khula|Lobster|Quicksand|Roboto|Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" href="styles/style.css">
+	<style>
+	#map {
+		display: inline-block;
+		height: 400px;
+		width: 100%;
+		margin: auto;
+		border: 1px solid grey;
+		margin-bottom: 5%;
+	}
+	</style>
+	<script type="text/javascript" src="js/services.js"></script>
+</head>
+<body>
+	<div class="row">
+		<div class="header col-12">
+			<div class="brand-logo">Wandering Tails Puppy Dog Services</div>
+			<ul class="tabs">
+				<li class="right"><a href="booking.html">Book Appointment!<i class="material-icons md-18 header-icon">pets</i></a></li>
+				<li class="right"><a href="references.html">References<i class="material-icons md-18 header-icon">pets</i></a></li>
+				<li class="right"><a href="services.html">What do we offer?<i class="material-icons md-18 header-icon">pets</i></a></li>
+				<li class="right"><a href="about.html">Who are we?<i class="material-icons md-18 header-icon">pets</i></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-5 offset-1">
+			<table id="services" class="services">
+				<thead>
+					<tr>
+						<th>Service</th>
+						<th>Cost</th>
+					</tr>
+				</thead>
+			</table>
+			</div>
+			<div class="col-5 service-area">
+				<h2>Where do wo offer?</h2>
+				<div id="map"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		var serviceList = document.getElementById("services");
+		for (var i=0; i<services.length; i++){
+			serviceDetails = serviceList.insertRow();
+			serviceTitle = serviceDetails.insertCell(0);
+			serviceTitle.innerHTML = services[i].title;
+			serviceCost = serviceDetails.insertCell(1);
+			serviceCost.innerHTML = "$" + services[i].cost;
+		};
+		</script>
+		<script>
+		function initMap() {
+			var central = {lat: 45.521465, lng: -73.589462};
+			var radius = 1300;
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 14,
+				center: central
+			});
+			var marker = new google.maps.Marker({
+				position: central,
+				map: map
+			});
+			var area = new google.maps.Circle({
+				strokeColor: '#FF0000',
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				fillColor: '#FF0000',
+				fillOpacity: 0.35,
+				map: map,
+				center: central,
+				radius: radius
+			});
+		}
+		</script>
+		<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZnbe82YMvgsIzJzhBoqxKld99BZlskGQ&callback=initMap">
+		</script>
+	</div>
+</body>
+</html>
