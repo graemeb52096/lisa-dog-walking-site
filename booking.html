@@ -20,8 +20,7 @@
 			</div>
 		</div>
 		<div class="container">
-			<div class="calendar" id="calendar">
-			</div>
+			<div class="calendar" id="calendar"></div>
 			<div id="appointment-summary" class="col-4 offset-4 appointment-summary">
 				<span class="arrow">V</span>
 				<h2>Appointment Summary:</h2>
@@ -53,10 +52,17 @@
 				</form>
 			</div>
 		</div>
+		<div class="modal" id="modal">
+			<div class="modal-content">
+				<span class="close" onclick="hideDaySchedule()">&times;</span>
+				<div id="scheduleDetails"></div>
+			</div>
+		</div>
 		<script type="text/javascript" src="js/appointments.js"></script>
+		<script type="text/javascript" src="js/services.js"></script>
 		<script type="text/javascript" src="js/bookingLib.js"></script>
 		<script type="text/javascript">
-			var testCalendar = initCalendar(05, 2017);
+			var testCalendar = initCalendar(02, 2017);
 			document.getElementById("calendar").appendChild(testCalendar);
 		</script>
 	</body>

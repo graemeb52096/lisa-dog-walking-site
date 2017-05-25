@@ -23,11 +23,11 @@ var services = [
 		"cost": 35.00
 	},
 	{
-		"title": "Additional dog on walk (max 2)",
-		"cost": 6.00
+		"title": "Hour walk, 2 dogs",
+		"cost": 24.00
 	},
 	{
-		"title": "Additional dog overnight (max 2)",
-		"cost": 8.00
+		"title": "Overnight 2 dogs",
+		"cost": 48.00
 	}
 ]

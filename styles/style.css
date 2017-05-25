@@ -168,11 +168,12 @@ body{
 }
 
 .services td{
-	font-size: 1.3em;
+	font-size: 1.1em;
 	padding: 1%;
 	margin: 1%;
 	text-align: center;
 	border-bottom: 2px solid lightgrey;
+	width: 50%;
 }
 
 .service-area{
