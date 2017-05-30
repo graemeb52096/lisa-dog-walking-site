@@ -1,6 +1,8 @@
 var MONTHS = ['January','February','March','April','May','June','July','August','September','October','Novermber','December'];
 var WEEK_DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
+var selectedAppointments = [];
+
 var dateHasAppointment = function(dateKey){
 	if (dateKey in schedule){
 		return(true);
@@ -27,8 +29,6 @@ var addDaysToCalendar = function(calendar, month, year){
 	var body = calendar.createTBody();
 	var calendarBody = calendar.createTBody();
 	var daysInMonth = new Date(year, month, 0).getDate();
-	console.log(daysInMonth);
-	console.log(new Date(year, month, 0));
 	var firstDay = new Date(year, month, 1).getDay();
 	var row = document.createElement("tr");
 	var dayOfWeek = 0;
@@ -66,6 +66,52 @@ var addDaysToCalendar = function(calendar, month, year){
 	return (calendar);
 };
 
+var createDayTable = function(dateKey){
+	var dayTable = document.createElement("table");
+	dayTable.createCaption().innerHTML = dateKey;
+	var header = dayTable.createTHead();
+	var header = header.insertRow(0);
+	header.insertCell(0).innerHTML = "Time";
+	header.insertCell(1).innerHTML = "Service";
+	return addAppointments(dateKey, dayTable);
+};
+
+var addAppointments = function(dateKey, dayTable){
+	var body = dayTable.createTBody();
+	var appointments = schedule[dateKey];
+	for (var i=0; i<appointments.length; i++){
+		var row = body.insertRow(i);
+		var service = document.createElement("select");
+		service.id = dateKey + appointments[i].time;
+		for (var x=0; x<services.length; x++){
+			var option = document.createElement("option");
+			option.text = services[x].title;
+			option.value = x;
+			service.add(option);
+		};
+		var selector = document.createElement("input");
+		selector.type = "checkbox";
+		selector.time = appointments[i].time;
+		selector.dateKey = dateKey;
+		selector.onclick = function(){
+			var appointmentDetails = {
+				"time": this.time,
+				"date": this.dateKey,
+				"service": document.getElementById(dateKey + this.time).value
+			};
+			if (this.checked == true){
+				addAppointment(appointmentDetails);
+			} else {
+				removeAppointment(appointmentDetails);
+			};
+		};
+		row.insertCell(0).innerHTML = appointments[i].time;
+		row.insertCell(1).appendChild(service);
+		row.insertCell(2).appendChild(selector);
+	};
+	return dayTable;
+};
+
 var displayDaySchedule = function(dateKey){
 	var modal = document.getElementById("modal");
 	modal.style.display = "block";
@@ -74,36 +120,7 @@ var displayDaySchedule = function(dateKey){
 	if (!dateHasAppointment(dateKey)){
 		alert("Sorry about that, this day no longer has any appointments available!");
 	} else {
-		var appointments = schedule[dateKey];
-		var bookingForm = document.createElement("form");
-		bookingForm.classList.add("form-control");
-		var head = document.createElement("h2");
-		head.innerHTML = "Select times";
-		bookingForm.appendChild(head);
-		for (var i=0; i<appointments.length; i++){
-			var appointmentSlot = document.createElement("div");
-			appointmentSlot.classList.add("form-group");
-			var label = document.createElement("label");
-			label.innerHTML = appointments[i].time + ": ";
-			appointmentSlot.appendChild(label);
-			var appointmentType = document.createElement("select");
-			var option = document.createElement("option");
-			option.text = "Select Service"
-			appointmentType.add(option);
-			for (var x=0; x<services.length; x++){
-				var option = document.createElement("option");
-				option.text = services[x].title;
-				appointmentType.add(option);
-			};
-			var appointmentSelected = document.createElement("input");
-			appointmentSelected.type = "checkbox";
-			appointmentSlot.appendChild(appointmentType);
-			appointmentSlot.appendChild(appointmentSelected);
-			bookingForm.appendChild(appointmentSlot);
-		};
-		console.log(appointments);
-		scheduleDetails.appendChild(bookingForm);
-		//alert("has appointment");
+		scheduleDetails.appendChild(createDayTable(dateKey));
 	};
 };
 
@@ -113,7 +130,26 @@ var hideDaySchedule = function(){
 };
 
 var addAppointment = function(appointmentDetails){
-
+	console.log("adding");
+	console.log(appointmentDetails);
 };
 
-var removeAppointment = function(){};
+var removeAppointment = function(appointmentDetails){
+	console.log("removing");
+	console.log(appointmentDetails);
+};
+
+var updateRecipt = function(){
+	var appointmentSummary = document.getElementById("appointment-summary");
+	appointmentSummary.style.display = "block";
+	var recipt = document.getElementById("recipt");
+	var selection = recipt.createTBody();
+	for (var i=0; i<selectedAppointments.length; i++){
+		var appointment = selectedAppointments[i]
+		var row = selection.insertRow();
+		row.insertCell(0) = appointment.title;
+		row.insertCell(1) = appointment.cost;
+		row.insertCell(2) = appointment.date;
+		row.insertCell(3) = appointment.time;
+	};
+};

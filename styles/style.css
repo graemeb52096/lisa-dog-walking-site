@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Caveat|Crimson+Text');
+
 /* General styling */
 body{
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	font-family: "Khula", sans-serif;
+	font-family: "Crimson Text", sans-serif;
 	background-color: #FDFDFD;
 }
 
@@ -52,7 +54,7 @@ body{
 }
 
 .header{
-	background-color: #9ad3de;
+	background-color: #e2ad6a;
 	border-bottom: 1px solid #c9c9c9;
 }
 
@@ -62,12 +64,7 @@ body{
 	font-weight: lighter;
 	font-size: 1.8em;
 	margin-left: 2%;
-	/*font-family: 'Roboto', sans-serif;*/
-	/*font-family: 'Khula', sans-serif;*/
-	/*font-family: 'Josefin Sans', sans-serif;*/
-	/*font-family: 'Lobster', cursive;*/
-	/*font-family: 'Roboto Mono', monospace;*/
-	font-family: 'Quicksand', sans-serif;
+	font-family: 'Caveat', sans-serif;
 	margin-left: 1%;
 	margin-top: .5%;
 }
@@ -102,7 +99,6 @@ body{
 	text-decoration: none;
 	font-size: 1.1em;
 	font-weight: lighter;
-	font-family: 'Khula', sans-serif;
 	height: 100%;
 	padding: 14px 16px;
 }
@@ -132,7 +128,6 @@ body{
 }
 
 .reference-letter{
-	font-family: "Khula", sans-serif;
 	font-size: 1.1em;
 }
 
@@ -164,7 +159,6 @@ body{
 
 .services th{
 	font-size: 1.5em;
-	font-family: "Roboto", sans-serif;
 }
 
 .services td{
@@ -193,7 +187,6 @@ body{
 .banner{
 	font-size: 3em;
 	font-weight: lighter;
-	font-family: "Roboto", sans-serif;
 	margin-bottom: 5%;
 }
 
@@ -210,7 +203,6 @@ body{
 .days th{
 	font-size: 1.5em;
 	column-span: 1;
-	font-family: "Roboto", sans-serif;
 }
 
 .days td{
@@ -223,7 +215,6 @@ body{
 
 .days caption{
 	font-size: 1.5em;
-	font-family: "Roboto", sans-serif;
 	margin-bottom: 2%;
 }
 
@@ -266,7 +257,6 @@ body{
     padding: 20px;
     border: 1px solid grey;
     width: 50%;
-		font-family: 'Khula', sans-serif;
 }
 
 .close{
@@ -291,7 +281,6 @@ body{
 }
 
 .appointment-summary{
-	font-family: "Roboto", sans-serif;
 	text-align: center;
 	margin-bottom: 5%;
 	display: None;
@@ -316,7 +305,6 @@ body{
 .selection th{
 	font-size: 1em;
 	column-span: 1;
-	font-family: "Roboto", sans-serif;
 	text-align: center;
 }
 
@@ -332,7 +320,6 @@ body{
 
 .selection caption{
 	font-size: 1.5em;
-	font-family: "Roboto", sans-serif;
 	margin-bottom: 2%;
 }
 
@@ -345,7 +332,6 @@ body{
 /* About */
 .bio{
 	margin-top: 5%;
-	font-family: 'Khula', sans-serif;
 	font-size: 1.4em;
 	background-color: #e3e3e3;
 	box-shadow: -3px 3px 1px 0px grey;

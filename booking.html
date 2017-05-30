@@ -4,7 +4,6 @@
 		<title>Wandering Tails Puppy Dog Services</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Khula|Lobster|Quicksand|Roboto|Roboto+Mono" rel="stylesheet">
 		<link rel="stylesheet" href="styles/style.css">
 	</head>
 	<body>
@@ -24,12 +23,13 @@
 			<div id="appointment-summary" class="col-4 offset-4 appointment-summary">
 				<span class="arrow">V</span>
 				<h2>Appointment Summary:</h2>
-				<table class="selection" id="selection">
+				<table class="selection" id="recipt">
 					<thead>
 						<tr>
 							<th>Service</th>
 							<th>Cost</th>
-							<th>Date/Time<th>
+							<th>Date</th>
+							<th>Time<th>
 						</tr>
 					</thead>
 				</table>
@@ -62,7 +62,7 @@
 		<script type="text/javascript" src="js/services.js"></script>
 		<script type="text/javascript" src="js/bookingLib.js"></script>
 		<script type="text/javascript">
-			var testCalendar = initCalendar(02, 2017);
+			var testCalendar = initCalendar(05, 2017);
 			document.getElementById("calendar").appendChild(testCalendar);
 		</script>
 	</body>
